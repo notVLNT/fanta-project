@@ -5,6 +5,17 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let budget = 250;
 let slotSelezionatoId = null; 
 let ruoloSelezionato = null;
+let miaSquadraIds = [];
+
+function acquista(id, nome, prezzo) {
+    if (miaSquadraIds.includes(id)) {
+        alert("Hai già questa calciatrice in squadra!");
+        return;
+    }
+    
+    // ... resto del codice di acquisto ...
+    miaSquadraIds.push(id); 
+}
 
 // 3. FUNZIONE PRINCIPALE: APRI MERCATO
 // Viene chiamata dai "+" sul campo (es: onclick="apriMercato('D', 'd-1')")
