@@ -2,61 +2,80 @@ const SUPABASE_URL = 'https://ejnbetqywcyukrtwetjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_P-sn36PRhmvlUVlQrpXBCw_ThF-dgWZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let slotSelezionato = null;
+let budget = 250;
+let slotSelezionatoId = null; 
+let ruoloSelezionato = null;
 
-function apriMercato(ruolo) {
-    // 1. Salviamo quale cerchietto abbiamo cliccato
-    slotSelezionato = event.target;
-    
-    // 2. Chiediamo a Supabase solo le calciatrici di quel ruolo
-    mostraListaFiltrata(ruolo);
-}
+// 3. FUNZIONE PRINCIPALE: APRI MERCATO
+// Viene chiamata dai "+" sul campo (es: onclick="apriMercato('D', 'd-1')")
+async function apriMercato(ruolo, idSlot) {
+    slotSelezionatoId = idSlot;
+    ruoloSelezionato = ruolo;
 
-async function mostraListaFiltrata(ruolo) {
+    // Feedback visivo: diciamo all'utente che stiamo caricando
+    const contenitoreLista = document.getElementById('lista-calciatrici');
+    contenitoreLista.innerHTML = '<p class="loading">Cercando ' + ruolo + ' disponibili...</p>';
+
+    // Chiamata a Supabase filtrata per ruolo
     const { data, error } = await _supabase
         .from('calciatrici')
         .select('*')
-        .eq('ruolo', 'ruolo'); // Filtro magico!
-
-    // Qui apriresti un "Modal" o una lista a comparsa con i risultati
-    console.log("Calciatrici disponibili per questo ruolo:", data);
-}
-
-async function caricaGiocatrici() {
-    // 1. Chiediamo i dati alla tabella 'calciatrici'
-    const { data, error } = await _supabase
-        .from('calciatrici')
-        .select('*')
-        .order('quotazione', { ascending: false }); // Ordina dalle più care
+        .eq('ruolo', ruolo)
+        .order('quotazione', { ascending: false });
 
     if (error) {
-        console.error("Errore nel recupero:", error);
+        console.error("Errore Supabase:", error);
         return;
     }
 
-    // 2. Togliamo la scritta "Caricamento"
-    document.getElementById('loading').style.display = 'none';
+    mostraCalciatriciInLista(data);
+}
 
-    // 3. Stampiamo i dati nella pagina
+// 4. FUNZIONE: MOSTRA CALCIATRICI NELLA LISTA SOTTO IL CAMPO
+function mostraCalciatriciInLista(calciatrici) {
     const contenitore = document.getElementById('lista-calciatrici');
-    
-    data.forEach(giocatrice => {
+    contenitore.innerHTML = `<h3>Mercato: ${ruoloSelezionato}</h3>`;
+
+    if (calciatrici.length === 0) {
+        contenitore.innerHTML += "<p>Nessuna giocatrice trovata.</p>";
+        return;
+    }
+
+    calciatrici.forEach(g => {
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'card-mercato';
         card.innerHTML = `
-            <h3>${giocatrice.nome}</h3>
-            <p>Squadra: <strong>${giocatrice.squadra}</strong></p>
-            <p>Ruolo: ${giocatrice.ruolo}</p>
-            <p>Prezzo: 💰${giocatrice.quotazione}</p>
-            <button onclick="seleziona('${giocatrice.nome}')">Aggiungi</button>
+            <div class="info">
+                <strong>${g.nome}</strong> - ${g.squadra}
+                <span class="price">💰${g.quotazione}</span>
+            </div>
+            <button onclick="acquista('${g.nome}', ${g.quotazione})">Compra</button>
         `;
         contenitore.appendChild(card);
     });
 }
 
-function seleziona(nome) {
-    alert("Hai selezionato: " + nome);
-}
+// 5. FUNZIONE: ACQUISTA E METTI SUL CAMPO
+function acquista(nome, prezzo) {
+    if (budget < prezzo) {
+        alert("Budget insufficiente! Scegli una giocatrice più economica.");
+        return;
+    }
 
-// Avviamo la funzione al caricamento della pagina
-caricaGiocatrici();
+    // Sottrai budget
+    budget -= prezzo;
+    document.getElementById('display-budget').innerText = `Budget: ${budget} 💰`;
+
+    // Aggiorna lo slot sul campo
+    const slot = document.getElementById(slotSelezionatoId);
+    
+    // Prendiamo solo il cognome per non rompere il layout del cerchietto
+    const cognome = nome.split(' ').pop();
+    slot.innerText = cognome;
+    slot.classList.add('filled');
+    
+    // Pulizia: svuotiamo la lista mercato dopo l'acquisto
+    document.getElementById('lista-calciatrici').innerHTML = '';
+    
+    console.log(`Acquistata ${nome}. Budget residuo: ${budget}`);
+}
