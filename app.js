@@ -1,3 +1,4 @@
+console.log("Il file app.js è stato caricato correttamente!");
 const SUPABASE_URL = 'https://ejnbetqywcyukrtwetjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_P-sn36PRhmvlUVlQrpXBCw_ThF-dgWZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
