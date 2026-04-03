@@ -17,6 +17,57 @@ function acquista(id, nome, prezzo) {
     miaSquadraIds.push(id); 
 }
 
+// --- FUNZIONI DI AUTH ---
+
+async function registrazione() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const { data, error } = await _supabase.auth.signUp({
+        email: email,
+        password: password,
+    });
+
+    if (error) alert("Errore: " + error.message);
+    else alert("Controlla la mail o prova a fare il login!");
+}
+
+async function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const { data, error } = await _supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
+
+    if (error) alert("Errore: " + error.message);
+    else location.reload(); // Ricarichiamo la pagina per aggiornare lo stato
+}
+
+async function logout() {
+    await _supabase.auth.signOut();
+    location.reload();
+}
+
+// --- CONTROLLO SESSIONE (Da eseguire all'avvio) ---
+async function controllaUtente() {
+    const { data: { session } } = await _supabase.auth.getSession();
+
+    if (session) {
+        // Utente loggato
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('user-logged').style.display = 'block';
+        document.getElementById('user-email').innerText = "Squadra di: " + session.user.email;
+        
+        // Qui caricheremo la rosa salvata dell'utente dal database!
+        caricaRosaSalvata(session.user.id);
+    }
+}
+
+// Esegui il controllo appena carichi la pagina
+controllaUtente();
+
 // 3. FUNZIONE PRINCIPALE: APRI MERCATO
 // Viene chiamata dai "+" sul campo (es: onclick="apriMercato('D', 'd-1')")
 async function apriMercato(ruolo, idSlot) {
