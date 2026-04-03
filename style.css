@@ -1,17 +1,48 @@
-body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
-.grid-container { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-    gap: 20px; 
+.pitch-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #2e7d32; /* Verde campo */
+    border: 5px solid #fff;
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 50px 50px;
 }
-.card { 
-    background: white; 
-    padding: 15px; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-    text-align: center;
+
+.field-row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
 }
-button { 
-    background: #e91e63; color: white; border: none; 
-    padding: 10px; border-radius: 5px; cursor: pointer; 
+
+.slot {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px dashed #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.slot:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+/* Quando una calciatrice è selezionata, cambiamo stile */
+.slot.filled {
+    border: 2px solid #ffd700;
+    background: #fff;
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
 }
