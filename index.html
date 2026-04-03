@@ -9,9 +9,33 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Lista Giocatrici - Serie A Women</h1>
-    <div id="loading">Caricamento in corso...</div>
-    <div id="lista-calciatrici" class="grid-container"></div>
+<div class="pitch-container">
+    <div class="pitch">
+        <!-- Area Portiere -->
+        <div class="field-row goalie">
+            <div class="slot" id="p-1" onclick="apriMercato('P')">+</div>
+        </div>
+        <!-- Area Difesa -->
+        <div class="field-row defense">
+            <div class="slot" id="d-1" onclick="apriMercato('D')">+</div>
+            <div class="slot" id="d-2" onclick="apriMercato('D')">+</div>
+            <div class="slot" id="d-3" onclick="apriMercato('D')">+</div>
+            <div class="slot" id="d-4" onclick="apriMercato('D')">+</div>
+        </div>
+        <!-- Area Centrocampo -->
+        <div class="field-row midfield">
+            <div class="slot" id="c-1" onclick="apriMercato('C')">+</div>
+            <div class="slot" id="c-2" onclick="apriMercato('C')">+</div>
+            <div class="slot" id="c-3" onclick="apriMercato('C')">+</div>
+        </div>
+        <!-- Area Attacco -->
+        <div class="field-row attack">
+            <div class="slot" id="a-1" onclick="apriMercato('A')">+</div>
+            <div class="slot" id="a-2" onclick="apriMercato('A')">+</div>
+            <div class="slot" id="a-3" onclick="apriMercato('A')">+</div>
+        </div>
+    </div>
+</div>
 
     <script src="app.js"></script>
 </body>
