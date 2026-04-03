@@ -64,3 +64,33 @@
     text-align: center;
     margin-top: 20px;
 }
+.slot.filled {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border: 2px solid #2e7d32;
+    color: #1a5d1a;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.1;
+}
+
+/* Un piccolo effetto quando passi sopra le card del mercato */
+.card-mercato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.card-mercato:hover {
+    transform: translateX(5px);
+    border-left: 4px solid #2e7d32;
+}
