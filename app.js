@@ -2,6 +2,26 @@ const SUPABASE_URL = 'https://ejnbetqywcyukrtwetjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_P-sn36PRhmvlUVlQrpXBCw_ThF-dgWZ';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+let slotSelezionato = null;
+
+function apriMercato(ruolo) {
+    // 1. Salviamo quale cerchietto abbiamo cliccato
+    slotSelezionato = event.target;
+    
+    // 2. Chiediamo a Supabase solo le calciatrici di quel ruolo
+    mostraListaFiltrata(ruolo);
+}
+
+async function mostraListaFiltrata(ruolo) {
+    const { data, error } = await _supabase
+        .from('calciatrici')
+        .select('*')
+        .eq('ruolo', 'ruolo'); // Filtro magico!
+
+    // Qui apriresti un "Modal" o una lista a comparsa con i risultati
+    console.log("Calciatrici disponibili per questo ruolo:", data);
+}
+
 async function caricaGiocatrici() {
     // 1. Chiediamo i dati alla tabella 'calciatrici'
     const { data, error } = await _supabase
