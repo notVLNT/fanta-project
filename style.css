@@ -46,3 +46,21 @@
     font-weight: bold;
     font-size: 12px;
 }
+
+.budget-badge {
+    background: #ffd700;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.hint {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
