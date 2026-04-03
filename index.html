@@ -13,6 +13,21 @@
 </head>
 <body>
 
+    <div id="auth-container">
+    <div id="login-form">
+        <h3>Entra nel Fanta Women</h3>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Accedi</button>
+        <button onclick="registrazione()">Registrati</button>
+    </div>
+    
+    <div id="user-logged" style="display: none;">
+        <span id="user-email"></span>
+        <button onclick="logout()">Esci</button>
+    </div>
+</div>
+
     <div class="container">
         <header>
             <h1>Fanta Women ⚽</h1>
