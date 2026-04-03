@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoalHer Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: #3C096C;
+            color: #fff;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 { font-size: 20px; }
+
+        header button {
+            padding: 8px 16px;
+            background: #C77DFF;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            background: #fff;
+            color: #666;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background: #3C096C;
+            color: #fff;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* CARD */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #3C096C;
+            border-bottom: 2px solid #f0eaf8;
+            padding-bottom: 10px;
+        }
+
+        /* FORM */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3C096C;
+        }
+
+        .btn-primary {
+            padding: 10px 24px;
+            background: #3C096C;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover { background: #5A189A; }
+
+        .btn-danger {
+            padding: 6px 12px;
+            background: #e53935;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* TABELLA */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th {
+            background: #f0eaf8;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5A189A;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #faf7ff; }
+
+        /* FEEDBACK */
+        .feedback {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.error {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+
+        /* LOGIN */
+        #login-admin {
+            max-width: 400px;
+            margin: 80px auto;
+            background: #fff;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #login-admin h2 {
+            color: #3C096C;
+            margin-bottom: 24px;
+        }
+
+        #login-admin input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        #login-admin button {
+            width: 100%;
+            padding: 12px;
+            background: #3C096C;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #admin-panel { display: none; }
+
+        .giornata-attiva {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .giornata-inattiva {
+            background: #f5f5f5;
+            color: #999;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div id="login-admin">
+        <h2>🔐 GoalHer Admin</h2>
+        <input type="email" id="admin-email" placeholder="Email">
+        <input type="password" id="admin-password" placeholder="Password">
+        <button onclick="loginAdmin()">Accedi</button>
+        <p id="login-error" style="color:#c62828; margin-top:12px; font-size:13px;"></p>
+    </div>
+
+    <!-- PANNELLO ADMIN -->
+    <div id="admin-panel">
+        <header>
+            <h1>⚽ GoalHer Admin</h1>
+            <button onclick="logoutAdmin()">Esci</button>
+        </header>
+
+        <div class="container">
+
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab active" onclick="mostraTab('tab-calciatrici')">
+                    Calciatrici
+                </button>
+                <button class="tab" onclick="mostraTab('tab-giornate')">
+                    Giornate
+                </button>
+                <button class="tab" onclick="mostraTab('tab-voti')">
+                    Inserisci Voti
+                </button>
+                <button class="tab" onclick="mostraTab('tab-classifica')">
+                    Classifica
+                </button>
+            </div>
+
+            <!-- TAB: CALCIATRICI -->
+            <div id="tab-calciatrici" class="tab-content active">
+                <div class="card">
+                    <h2>Aggiungi Calciatrice</h2>
+                    <div id="feedback-calciatrice" class="feedback"></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome completo</label>
+                            <input type="text" id="c-nome" placeholder="Es. Manuela Giugliano">
+                        </div>
+                        <div class="form-group">
+                            <label>Squadra</label>
+                            <input type="text" id="c-squadra" placeholder="Es. Roma">
+                        </div>
+                        <div class="form-group">
+                            <label>Ruolo</label>
+                            <select id="c-ruolo">
+                                <option value="P">Portiere</option>
+                                <option value="D">Difensore</option>
+                                <option value="C">Centrocampista</option>
+                                <option value="A">Attaccante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quotazione</label>
+                            <input type="number" id="c-quotazione" placeholder="Es. 25" min="1" max="100">
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="aggiungiCalciatrice()">
+                        Aggiungi
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2>Calciatrici nel database</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Squadra</th>
+                                <th>Ruolo</th>
+                                <th>Quotazione</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-calciatrici"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: GIORNATE -->
+            <div id="tab-giornate" class="tab-content">
+                <div class="card">
+                    <h2>Crea Giornata</h2>
+                    <div id="feedback-giornata" class="feedback"></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Numero giornata</label>
+                            <input type="number" id="g-numero" placeholder="Es. 1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Stagione</label>
+                            <input type="text" id="g-stagione" value="2024-25">
+                        </div>
+                        <div class="form-group">
+                            <label>Data inizio</label>
+                            <input type="date" id="g-inizio">
+                        </div>
+                        <div class="form-group">
+                            <label>Data fine</label>
+                            <input type="date" id="g-fine">
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="creaGiornata()">
+                        Crea Giornata
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2>Giornate</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Numero</th>
+                                <th>Stagione</th>
+                                <th>Date</th>
+                                <th>Stato</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-giornate"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: VOTI -->
+            <div id="tab-voti" class="tab-content">
+                <div class="card">
+                    <h2>Inserisci Voti</h2>
+                    <div id="feedback-voti" class="feedback"></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Giornata</label>
+                            <select id="v-giornata"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Calciatrice</label>
+                            <select id="v-calciatrice"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Voto base (1-10)</label>
+                            <input type="number" id="v-voto" value="6" min="1" max="10" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Gol</label>
+                            <input type="number" id="v-gol" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Assist</label>
+                            <input type="number" id="v-assist" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Rigori parati</label>
+                            <input type="number" id="v-rigori" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Ammonizione</label>
+                            <select id="v-ammonizione">
+                                <option value="false">No</option>
+                                <option value="true">Sì</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Espulsione</label>
+                            <select id="v-espulsione">
+                                <option value="false">No</option>
+                                <option value="true">Sì</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Clean Sheet</label>
+                            <select id="v-cleansheet">
+                                <option value="false">No</option>
+                                <option value="true">Sì</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="inserisciVoti()">
+                        Salva Voti
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2>Voti inseriti</h2>
+                    <div class="form-group" style="margin-bottom:16px; max-width:300px;">
+                        <label>Filtra per giornata</label>
+                        <select id="filtro-giornata-voti" onchange="caricaVotiInseriti()"></select>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Calciatrice</th>
+                                <th>Voto</th>
+                                <th>Gol</th>
+                                <th>Assist</th>
+                                <th>CS</th>
+                                <th>Amm</th>
+                                <th>Esp</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-voti"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: CLASSIFICA -->
+            <div id="tab-classifica" class="tab-content">
+                <div class="card">
+                    <h2>Calcola Punteggi</h2>
+                    <p style="color:#666; font-size:13px; margin-bottom:16px;">
+                        Seleziona la giornata e calcola i punteggi per tutti gli utenti.
+                    </p>
+                    <div id="feedback-punteggi" class="feedback"></div>
+                    <div class="form-group" style="max-width:300px; margin-bottom:16px;">
+                        <label>Giornata</label>
+                        <select id="calc-giornata"></select>
+                    </div>
+                    <button class="btn-primary" onclick="calcolaPunteggi()">
+                        Calcola Punteggi
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2>Classifica Generale</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Utente</th>
+                                <th>Punti Totali</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabella-classifica"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
