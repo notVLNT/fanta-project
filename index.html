@@ -3,72 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fanta Serie A Women - Il Mio Team</title>
-    
-    <!-- 1. Libreria Supabase -->
+    <title>Fanta Women ⚽</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- 2. Il tuo CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- AUTH -->
     <div id="auth-container">
-    <div id="login-form">
-        <h3>Entra nel Fanta Women</h3>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Accedi</button>
-        <button onclick="registrazione()">Registrati</button>
-    </div>
-    
-    <div id="user-logged" style="display: none;">
-        <span id="user-email"></span>
-        <button onclick="logout()">Esci</button>
-    </div>
-</div>
+        <div id="login-form">
+            <h2>Fanta Women ⚽</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Accedi</button>
+            <button onclick="registrazione()">Registrati</button>
+        </div>
 
+        <div id="user-logged" style="display:none;">
+            <span id="user-email"></span>
+            <button onclick="logout()">Esci</button>
+        </div>
+    </div>
+
+    <!-- CONTENUTO PRINCIPALE -->
     <div class="container">
         <header>
             <h1>Fanta Women ⚽</h1>
-            <div id="display-budget" class="budget-badge">Budget: 250 💰</div>
+            <div id="display-budget" class="budget-badge">Budget: 500 💰</div>
         </header>
 
-        <!-- IL CAMPO DA CALCIO -->
-        <div class="pitch-container">
-            <div class="pitch">
-                
-                <!-- ATTACCO -->
-                <div class="field-row">
-                    <div class="slot" id="a-1" onclick="apriMercato('A', 'a-1')">+</div>
-                    <div class="slot" id="a-2" onclick="apriMercato('A', 'a-2')">+</div>
-                    <div class="slot" id="a-3" onclick="apriMercato('A', 'a-3')">+</div>
-                </div>
-
-                <!-- CENTROCAMPO -->
-                <div class="field-row">
-                    <div class="slot" id="c-1" onclick="apriMercato('C', 'c-1')">+</div>
-                    <div class="slot" id="c-2" onclick="apriMercato('C', 'c-2')">+</div>
-                    <div class="slot" id="c-3" onclick="apriMercato('C', 'c-3')">+</div>
-                </div>
-
-                <!-- DIFESA -->
-                <div class="field-row">
-                    <div class="slot" id="d-1" onclick="apriMercato('D', 'd-1')">+</div>
-                    <div class="slot" id="d-2" onclick="apriMercato('D', 'd-2')">+</div>
-                    <div class="slot" id="d-3" onclick="apriMercato('D', 'd-3')">+</div>
-                    <div class="slot" id="d-4" onclick="apriMercato('D', 'd-4')">+</div>
-                </div>
-
-                <!-- PORTIERE -->
-                <div class="field-row">
-                    <div class="slot" id="p-1" onclick="apriMercato('P', 'p-1')">+</div>
-                </div>
-
-            </div>
+        <!-- SELEZIONE MODULO -->
+        <div class="modulo-wrap">
+            <label for="select-modulo">Modulo:</label>
+            <select id="select-modulo" onchange="cambiaModulo(this.value)">
+                <option value="4-3-3">4-3-3</option>
+                <option value="4-4-2">4-4-2</option>
+                <option value="3-5-2">3-5-2</option>
+                <option value="3-4-3">3-4-3</option>
+                <option value="5-3-2">5-3-2</option>
+            </select>
         </div>
 
-        <!-- ZONA MERCATO (Apparirà qui la lista quando clicchi sui +) -->
+        <!-- CAMPO -->
+        <div class="pitch-container">
+            <div id="campo"></div>
+        </div>
+
+        <!-- PANCHINA -->
+        <div id="panchina" class="panchina-container"></div>
+
+        <!-- MERCATO -->
         <section id="mercato-section">
             <div id="lista-calciatrici" class="lista-container">
                 <p class="hint">Clicca su un ruolo nel campo per cercare le giocatrici</p>
@@ -77,7 +61,6 @@
 
     </div>
 
-    <!-- 3. Il tuo JavaScript (Sempre alla fine) -->
     <script src="app.js"></script>
 </body>
 </html>
