@@ -1,0 +1,17 @@
+body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
+.grid-container { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+}
+.card { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    text-align: center;
+}
+button { 
+    background: #e91e63; color: white; border: none; 
+    padding: 10px; border-radius: 5px; cursor: pointer; 
+}
