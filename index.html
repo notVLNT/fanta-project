@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fanta Women ⚽</title>
+    <title>Fanta Women — GoalHer</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,6 @@
     <!-- AUTH -->
     <div id="auth-container">
         <div id="login-form">
-            <h2>Fanta Women ⚽</h2>
             <input type="email" id="email" placeholder="Email">
             <input type="password" id="password" placeholder="Password">
             <button onclick="login()">Accedi</button>
@@ -27,14 +26,22 @@
 
     <!-- CONTENUTO PRINCIPALE -->
     <div class="container">
+
+        <!-- HEADER CON LOGO -->
         <header>
-            <h1>Fanta Women ⚽</h1>
-            <div id="display-budget" class="budget-badge">Budget: 500 💰</div>
+            <div class="header-logo">
+                <span class="logo-goal">GOAL</span>
+                <span class="logo-her">Her</span>
+                <span class="logo-sub">Fantasy Game</span>
+            </div>
+            <div id="display-budget" class="budget-badge">
+                Budget: 500 💰
+            </div>
         </header>
 
-        <!-- SELEZIONE MODULO -->
+        <!-- MODULO -->
         <div class="modulo-wrap">
-            <label for="select-modulo">Modulo:</label>
+            <label for="select-modulo">Modulo</label>
             <select id="select-modulo" onchange="cambiaModulo(this.value)">
                 <option value="4-3-3">4-3-3</option>
                 <option value="4-4-2">4-4-2</option>
@@ -55,7 +62,9 @@
         <!-- MERCATO -->
         <section id="mercato-section">
             <div id="lista-calciatrici" class="lista-container">
-                <p class="hint">Clicca su un ruolo nel campo per cercare le giocatrici</p>
+                <p class="hint">
+                    Clicca su uno slot nel campo per cercare le giocatrici
+                </p>
             </div>
         </section>
 
