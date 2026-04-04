@@ -1,3 +1,33 @@
+/* ============================================================
+   FANTA WOMEN — STYLE
+   Estensione visiva di GoalHer
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Satisfy&display=swap');
+
+/* ============================================================
+   VARIABILI
+   ============================================================ */
+
+:root {
+    --accent:        #5A189A;
+    --accent-strong: #3C096C;
+    --accent-soft:   #C77DFF;
+    --accent-bg:     #f0eaf8;
+    --white:         #ffffff;
+    --text:          #333333;
+    --text-light:    #777777;
+    --border:        rgba(90,24,154,0.12);
+    --shadow:        rgba(90,24,154,0.15);
+    --green-field:   #1a6b1a;
+    --green-dark:    #145214;
+    --gold:          #ffd700;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,18 +35,23 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    background: var(--accent-bg);
+    color: var(--text);
+    min-height: 100vh;
 }
 
-/* AUTH */
+/* ============================================================
+   AUTH BAR
+   ============================================================ */
+
 #auth-container {
-    background: #2e7d32;
-    padding: 16px 24px;
+    background: linear-gradient(90deg, #3C096C, #5A189A);
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 #login-form {
@@ -26,146 +61,282 @@ body {
     flex-wrap: wrap;
 }
 
-#login-form h2 { color: #fff; }
-
 #login-form input {
-    padding: 8px 12px;
+    padding: 8px 14px;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    outline: none;
+    transition: background 0.2s ease;
 }
+
+#login-form input::placeholder { color: rgba(255,255,255,0.6); }
+#login-form input:focus { background: rgba(255,255,255,0.25); }
 
 #login-form button,
 #user-logged button {
-    padding: 8px 16px;
-    background: #ffd700;
+    padding: 8px 18px;
+    background: var(--gold);
     border: none;
-    border-radius: 6px;
-    font-weight: bold;
+    border-radius: 20px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
     cursor: pointer;
+    color: #333;
+    transition: filter 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
+
+#login-form button:hover,
+#user-logged button:hover { filter: brightness(110%); }
 
 #user-logged {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: #fff;
+    gap: 14px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
 }
 
-/* LAYOUT */
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
 .container {
-    max-width: 700px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 24px 16px;
+    padding: 28px 16px 48px;
 }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
-header h1 { font-size: 24px; }
+.header-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.header-logo .logo-goal {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--accent-strong);
+    letter-spacing: -1px;
+}
+
+.header-logo .logo-her {
+    font-family: 'Satisfy', cursive;
+    font-size: 28px;
+    color: var(--accent);
+    margin-top: -4px;
+}
+
+.header-logo .logo-sub {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-soft);
+    margin-top: 2px;
+}
 
 .budget-badge {
-    background: #ffd700;
-    color: #333;
-    padding: 8px 18px;
+    background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+    color: #fff;
+    padding: 10px 20px;
     border-radius: 50px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 4px 12px var(--shadow);
+    letter-spacing: 0.3px;
 }
 
-/* MODULO */
+/* ============================================================
+   MODULO
+   ============================================================ */
+
 .modulo-wrap {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    font-weight: 600;
+    gap: 12px;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow);
+    border-left: 3px solid var(--accent-soft);
+}
+
+.modulo-wrap label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
 }
 
 .modulo-wrap select {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 2px solid #2e7d32;
-    font-size: 14px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 2px solid var(--accent-soft);
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--accent-strong);
     cursor: pointer;
+    background: var(--accent-bg);
+    outline: none;
+    transition: border-color 0.2s ease;
 }
 
-/* CAMPO */
+.modulo-wrap select:hover { border-color: var(--accent); }
+
+/* ============================================================
+   CAMPO
+   ============================================================ */
+
 .pitch-container {
-    background: #2e7d32;
-    border: 4px solid #fff;
+    background: linear-gradient(180deg, #1a6b1a 0%, #1e7a1e 50%, #1a6b1a 100%);
+    border: 4px solid rgba(255,255,255,0.3);
     border-radius: 16px;
-    padding: 24px 16px;
+    padding: 28px 16px;
     margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+
+    /* Righe del campo */
     background-image:
-        linear-gradient(rgba(255,255,255,0.07) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(255,255,255,0.07) 2px, transparent 2px);
-    background-size: 50px 50px;
+        linear-gradient(180deg, #1a6b1a 0%, #1e7a1e 50%, #1a6b1a 100%),
+        repeating-linear-gradient(
+            180deg,
+            transparent,
+            transparent 60px,
+            rgba(255,255,255,0.04) 60px,
+            rgba(255,255,255,0.04) 61px
+        );
+}
+
+/* Linea di metà campo */
+.pitch-container::before {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 1px;
+}
+
+/* Cerchio centrale */
+.pitch-container::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .field-row {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
 }
 
 .field-row:last-child { margin-bottom: 0; }
 
-/* SLOT */
+/* ============================================================
+   SLOT
+   ============================================================ */
+
 .slot {
-    width: 70px;
-    height: 70px;
-    background: rgba(255,255,255,0.15);
-    border: 2px dashed #fff;
+    width: 72px;
+    height: 72px;
+    background: rgba(255,255,255,0.12);
+    border: 2px dashed rgba(255,255,255,0.4);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 24px;
+    color: rgba(255,255,255,0.7);
+    font-size: 26px;
+    font-weight: 300;
     cursor: pointer;
     transition: all 0.25s ease;
     position: relative;
 }
 
 .slot:hover {
-    background: rgba(255,255,255,0.3);
+    background: rgba(199,125,255,0.25);
+    border-color: var(--accent-soft);
+    color: #fff;
     transform: scale(1.1);
+    box-shadow: 0 0 16px rgba(199,125,255,0.4);
 }
 
 .slot.filled {
-    background: #fff;
-    border: 2px solid #ffd700;
-    color: #1a5d1a;
-    font-size: 11px;
+    background: linear-gradient(145deg, #ffffff, #f0eaf8);
+    border: 2px solid var(--gold);
+    color: var(--accent-strong);
+    font-size: 10px;
     font-weight: 700;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     cursor: default;
+    transform: none;
+}
+
+.slot.filled:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }
 
 .slot-nome {
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 9px;
+    font-weight: 800;
     text-align: center;
     line-height: 1.2;
+    color: var(--accent-strong);
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .slot-quota {
-    font-size: 9px;
-    color: #666;
+    font-size: 8px;
+    color: var(--accent-soft);
+    font-weight: 600;
 }
 
 .btn-rimuovi {
     position: absolute;
-    top: -6px;
-    right: -6px;
+    top: -5px;
+    right: -5px;
     width: 18px;
     height: 18px;
     background: #e53935;
@@ -177,38 +348,63 @@ header h1 { font-size: 24px; }
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: background 0.2s ease;
+    z-index: 10;
 }
 
-/* PANCHINA */
+.btn-rimuovi:hover { background: #c62828; }
+
+/* ============================================================
+   PANCHINA
+   ============================================================ */
+
 .panchina-container {
-    background: #795548;
+    background: linear-gradient(135deg, #3C096C, #5A189A);
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 24px;
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .panchina-container h3 {
-    color: #fff;
+    color: rgba(255,255,255,0.7);
     text-align: center;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 14px;
+    font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    font-weight: 700;
 }
 
 .panchina-container .slot {
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
+    width: 58px;
+    height: 58px;
+    font-size: 22px;
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.25);
 }
 
-/* MERCATO */
+.panchina-container .slot:hover {
+    background: rgba(199,125,255,0.2);
+    border-color: var(--accent-soft);
+}
+
+.panchina-container .slot.filled {
+    background: linear-gradient(145deg, #ffffff, #f0eaf8);
+    border-color: var(--accent-soft);
+}
+
+/* ============================================================
+   MERCATO
+   ============================================================ */
+
 #mercato-section {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 16px var(--shadow);
+    border-top: 3px solid var(--accent-soft);
 }
 
 .mercato-header {
@@ -220,43 +416,56 @@ header h1 { font-size: 24px; }
     flex-wrap: wrap;
 }
 
-.mercato-header h3 { font-size: 16px; }
+.mercato-header h3 {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-strong);
+}
 
 .mercato-header input {
-    padding: 8px 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 8px 14px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
     flex: 1;
     min-width: 180px;
-}
-
-.mercato-header input:focus {
     outline: none;
-    border-color: #2e7d32;
+    transition: border-color 0.2s ease;
+    color: var(--text);
 }
 
-/* CARD MERCATO */
+.mercato-header input:focus { border-color: var(--accent-soft); }
+.mercato-header input::placeholder { color: #bbb; }
+
+/* ============================================================
+   CARD MERCATO
+   ============================================================ */
+
 .card-mercato {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: #f9f9f9;
-    border-radius: 8px;
+    padding: 12px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
     margin-bottom: 8px;
     transition: all 0.2s ease;
     border-left: 3px solid transparent;
+    cursor: pointer;
 }
 
 .card-mercato:hover {
     transform: translateX(4px);
-    border-left-color: #2e7d32;
-    background: #f1f8e9;
+    border-left-color: var(--accent-soft);
+    background: #ede4fa;
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .card-mercato.non-disponibile {
-    opacity: 0.45;
+    opacity: 0.4;
     pointer-events: none;
 }
 
@@ -266,12 +475,96 @@ header h1 { font-size: 24px; }
     gap: 3px;
 }
 
-.card-info strong { font-size: 14px; }
+.card-info strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-strong);
+}
 
 .card-squadra {
-    font-size: 12px;
-    color: #777;
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 600;
 }
 
 .card-ruolo {
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--accent-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-destra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-quota {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.card-destra button {
+    padding: 7px 16px;
+    background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px var(--shadow);
+}
+
+.card-destra button:hover {
+    filter: brightness(115%);
+    box-shadow: 0 4px 10px var(--shadow);
+}
+
+.card-destra button:disabled {
+    background: #ddd;
+    color: #999;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   VARIE
+   ============================================================ */
+
+.hint {
+    color: #bbb;
+    font-style: italic;
+    text-align: center;
+    padding: 24px 0;
+    font-size: 13px;
+}
+
+.loading {
+    color: var(--accent-soft);
+    text-align: center;
+    padding: 24px 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 500px) {
+    .slot { width: 58px; height: 58px; font-size: 20px; }
+    .slot-nome { font-size: 8px; }
+    .budget-badge { font-size: 12px; padding: 8px 14px; }
+    .header-logo .logo-goal { font-size: 26px; }
+    .header-logo .logo-her { font-size: 22px; }
+    .mercato-header { flex-direction: column; align-items: flex-start; }
+    .mercato-header input { width: 100%; }
+}
